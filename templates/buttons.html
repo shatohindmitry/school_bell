@@ -1,0 +1,11 @@
+{% if modal %}
+<div class="text-left mt-5 mb-5">
+    <input type="button" class="btn btn-success" data-bs-dismiss="modal" value="Редактировать"/>
+</div>
+{% else %}
+<div class="text-left mt-5 mb-5">
+    <input type="button" id='btnSave' onclick="sendData()" class="btn btn-success" value="Сохранить"/>
+</div>
+{% endif %}
+
+
