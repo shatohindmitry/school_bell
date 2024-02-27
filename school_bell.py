@@ -1,6 +1,7 @@
 import configparser, datetime, secrets
+import os
 import shutil
-from flask import Flask, request, render_template, redirect, url_for, flash, session
+from flask import Flask, request, render_template, redirect, url_for, flash, session, send_file
 from werkzeug.utils import secure_filename
 from operator import itemgetter
 
@@ -385,6 +386,16 @@ def upload_file():
             save_file(request)
             return redirect(url_for('config_bells'))
     return render_template('upload.html')
+
+@app.route('/download')
+def download():
+    if not session.get("name"):
+        return redirect("/login")
+    path = os.path.abspath(FILENAME)
+    try:
+        return send_file(path, as_attachment=True)
+    except FileNotFoundError:
+        return redirect("/edit_table")
 
 @app.route("/logout")
 def logout():
