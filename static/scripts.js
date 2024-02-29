@@ -32,9 +32,10 @@ function add_row(id) {
 var rowCount = document.getElementById('table_'+id).rows.length;
 var idCount = 'select_' + id + '_' + rowCount;
 var idTime = 'time_' + id + '_' + rowCount;
+var idRow = ''+id+'_row_'+rowCount;
 var str = `
-<tr>
-<td>rowCount</td>
+<tr id=idRow>
+<td>rowCount<button class="btn btn-warning" onclick="delRow('idRow')">X</button></td>
 <td><input class="form-control" id="time_" type="time" data-format="hh:mm" value="00:00"/></td>
 <td>
 <select class="form-select" id="select_">
@@ -42,9 +43,12 @@ var str = `
 <option value="2">Двойной</option>
 </select>
 </td> </tr>`;
+
 str = str.replace('rowCount', rowCount);
 str = str.replace('select_', idCount);
 str = str.replace('time_', idTime);
+str = str.replace(/idRow/g, idRow);
+
 document.getElementById('table_'+id).innerHTML += str;
 }
 
