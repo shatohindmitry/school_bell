@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-1">
+    <div class="container"> <h1 class="text-center my-5">Обращение учеников в администрацию школы</h1>
+        <form>
+            <div class="mb-3">
+                <label for="fullName" class="form-label">ФИО</label>
+                <input type="text" class="form-control" id="fullName" required>
+            </div>
+            <div class="mb-3">
+                <label for="className" class="form-label">Класс</label>
+            <input type="text" class="form-control" id="className" required> </div>
+            <div class="mb-3">
+                <label for="issue" class="form-label">Суть обращения</label>
+                <textarea class="form-control" id="issue" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </div>
+    <p class="mb-0"><a href="/index"><- Назад</a></p>
+</div>
+{% endblock %}

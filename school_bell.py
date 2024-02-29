@@ -354,30 +354,6 @@ def getBellTimes(all_time, spec_time):
 
     return schedules_time
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if check_user(username, password):
-            return redirect(url_for('config_bells'))
-        else:
-            return render_template('login.html')
-    else:
-        return render_template('login.html')
-
-@app.route('/about', methods=['GET', 'POST'])
-def about():
-    if not session.get("name"):
-        return redirect("/login")
-    return render_template('about.html')
-
-@app.route('/')
-def config_bells():
-    if not session.get("name"):
-        return redirect("/login")
-    return redirect("/edit_table")
-
 def get_ini_files():
     current_directory = os.getcwd()
     ini_files = []
@@ -386,6 +362,32 @@ def get_ini_files():
             if file.endswith('.ini'):
                 ini_files.append(file)
     return ini_files
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if check_user(username, password):
+            if session.get("url"):
+                return redirect(session["url"])
+            else:
+                return redirect(url_for('index'))
+        else:
+            return render_template('login.html')
+    else:
+        return render_template('login.html')
+
+@app.route('/about', methods=['GET', 'POST'])
+def about():
+    if not session.get("name"):
+        session['url'] = url_for('about')
+        return redirect("/login")
+    return render_template('about.html', username=session.get("name"))
+
+@app.route('/')
+def index():
+    return render_template('index.html', username=session.get("name"))
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
@@ -397,9 +399,9 @@ def upload_file():
             return result
         else:
             save_file(request)
-            return redirect(url_for('config_bells'))
+            return redirect(url_for('edit_table'))
     ini_files = get_ini_files()
-    return render_template('upload.html', ini_files=ini_files)
+    return render_template('upload.html', ini_files=ini_files, username=session.get("name"))
 
 @app.route('/download/<file_name>')
 def download(file_name):
@@ -418,12 +420,13 @@ def download(file_name):
 @app.route("/logout")
 def logout():
     session["name"] = None
-    return redirect("/login")
+    return redirect("/")
 
 @app.route('/edit_table', methods=['GET', 'POST'])
 def edit_table():
     modal = True
     if not session.get("name"):
+        session['url'] = url_for('edit_table')
         return redirect("/login")
     if session.get('name') == 'admin':
         modal = False
@@ -453,8 +456,42 @@ def edit_table():
 
 @app.errorhandler(404)
 def not_found(e):
-    return redirect("/edit_table")
+    return redirect("/")
 
+@app.route("/library")
+def library():
+    if not session.get("name"):
+        session['url'] = url_for('library')
+        return redirect("/login")
+    return render_template('/library.html', username=session.get("name"))
+
+@app.route("/profile")
+def profile():
+    if not session.get("name"):
+        return redirect("/login")
+    return render_template('/profile.html', username=session.get("name"))
+
+@app.route("/schedule")
+def schedule():
+    return render_template('/schedule.html', username=session.get("name"))
+
+@app.route("/anonimquestion")
+def anonimquestion():
+    return render_template('/anonimquestion.html', username=session.get("name"))
+
+@app.route("/ContacAdm")
+def ContacAdm():
+    if not session.get("name"):
+        session['url'] = url_for('ContacAdm')
+        return redirect("/login")
+    return render_template('/ContacAdm.html', username=session.get("name"))
+
+@app.route("/forum")
+def forum():
+    if not session.get("name"):
+        session['url'] = url_for('forum')
+        return redirect("/login")
+    return render_template('/forum.html', username=session.get("name"))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5050')
