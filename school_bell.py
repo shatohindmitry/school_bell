@@ -1,9 +1,8 @@
-import configparser, datetime, secrets
-import os
-import shutil
+import configparser, datetime, secrets, requests, os, shutil
 from flask import Flask, request, render_template, redirect, url_for, flash, session, send_file
 from werkzeug.utils import secure_filename
 from operator import itemgetter
+from bs4 import BeautifulSoup
 
 USERNAMES = {'admin': '321', 'user': '123'}
 FILENAME = 'config.ini'
@@ -471,9 +470,21 @@ def profile():
         return redirect("/login")
     return render_template('/profile.html', username=session.get("name"))
 
+def get_schedule_class(idclass):
+    url = 'https://roschinskayasch-sosna.educhel.ru/about/schedule/' + idclass
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'lxml')
+    quotes = soup.find_all('div', class_='ListItems')[0]
+    return quotes
+
 @app.route("/schedule")
-def schedule():
-    return render_template('/schedule.html', username=session.get("name"))
+@app.route("/schedule/<idclass>")
+def schedule(idclass=0):
+    if not idclass == 0:
+        schedule_class = get_schedule_class(idclass)
+        schedule_class = schedule_class
+        return render_template('/schedule.html', username=session.get("name"), idclass=idclass, schedule_class=schedule_class)
+    return render_template('/schedule.html', username=session.get("name"), idclass=idclass)
 
 @app.route("/anonimquestion")
 def anonimquestion():

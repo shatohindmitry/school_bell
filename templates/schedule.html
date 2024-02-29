@@ -1,174 +1,47 @@
 {% extends 'base.html' %}
 {% block content %}
-<div>
-    <table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th colspan="5" class="text-center">Первая смена</th>
-      <th colspan="5" class="text-center">Вторая смена</th>
-    </tr>
-    <tr>
-      <th>Класс</th>
-      <th>1 урок</th>
-      <th>2 урок</th>
-      <th>3 урок</th>
-      <th>4 урок</th>
-      <th>5 урок</th>
-      <th>1 урок</th>
-      <th>2 урок</th>
-      <th>3 урок</th>
-      <th>4 урок</th>
-      <th>5 урок</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>Математика</td>
-      <td>Русский язык</td>
-      <td>Обществознание</td>
-      <td>Физика</td>
-      <td>Иностранный язык</td>
-      <td>Литература</td>
-      <td>История</td>
-      <td>География</td>
-      <td>Биология</td>
-      <td>Изобразительное искусство</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Математика</td>
-      <td>Русский язык</td>
-      <td>Обществознание</td>
-      <td>Физика</td>
-      <td>Иностранный язык</td>
-      <td>Литература</td>
-      <td>История</td>
-      <td>География</td>
-      <td>Химия</td>
-      <td>Музыка</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>Математика</td>
-      <td>Русский язык</td>
-      <td>Обществознание</td>
-      <td>Физика</td>
-      <td>Иностранный язык</td>
-      <td>Литература</td>
-      <td>История</td>
-      <td>География</td>
-      <td>Биология</td>
-      <td>Физкультура</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>Математика</td>
-      <td>Русский язык</td>
-      <td>Обществознание</td>
-      <td>Физика</td>
-      <td>Иностранный язык</td>
-      <td>Литература</td>
-      <td>История</td>
-      <td>География</td>
-      <td>Химия</td>
-      <td>ИЗО</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>Математика</td>
-      <td>Русский язык</td>
-      <td>Обществознание</td>
-      <td>Физика</td>
-      <td>Иностранный язык</td>
-      <td>Литература</td>
-      <td>История</td>
-      <td>География</td>
-      <td>Биология</td>
-      <td>Физкультура</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>Математика</td>
-      <td>Русский язык</td>
-      <td>Обществознание</td>
-      <td>Физика</td>
-      <td>Иностранный язык</td>
-      <td>Литература</td>
-      <td>История</td>
-      <td>География</td>
-      <td>Химия</td>
-      <td>ИЗО</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>Математика</td>
-      <td>Русский язык</td>
-      <td>Обществознание</td>
-      <td>Физика</td>
-      <td>Иностранный язык</td>
-      <td>Литература</td>
-      <td>История</td>
-      <td>География</td>
-      <td>Биология</td>
-      <td>Физкультура</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>Математика</td>
-      <td>Русский язык</td>
-      <td>Обществознание</td>
-      <td>Физика</td>
-      <td>Иностранный язык</td>
-      <td>Литература</td>
-      <td>История</td>
-      <td>География</td>
-      <td>Химия</td>
-      <td>ИЗО</td>
-    </tr>
-    <tr>
-      <td>9</td>
-      <td>Математика</td>
-      <td>Русский язык</td>
-      <td>Обществознание</td>
-      <td>Физика</td>
-      <td>Иностранный язык</td>
-      <td>Литература</td>
-      <td>История</td>
-      <td>География</td>
-      <td>Биология</td>
-      <td>Физкультура</td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td>Математика</td>
-      <td>Русский язык</td>
-      <td>Обществознание</td>
-      <td>Физика</td>
-      <td>Иностранный язык</td>
-      <td>Литература</td>
-      <td>История</td>
-      <td>География</td>
-      <td>Химия</td>
-      <td>ИЗО</td>
-    </tr>
-    <tr>
-      <td>11</td>
-      <td>Математика</td>
-      <td>Русский язык</td>
-      <td>Обществознание</td>
-      <td>Физика</td>
-      <td>Иностранный язык</td>
-      <td>Литература</td>
-      <td>История</td>
-      <td>География</td>
-      <td>Биология</td>
-      <td>Физкультура</td>
-    </tr>
-  </tbody>
-</table>
-
+{% if idclass == 0 %}
+<div class="pagecontent-wrapper">
+  <h3>Основная школа:</h3>
+  <ul class="shedule_classes">
+    <li><a class="border" href="/schedule/1541587" tabindex="1">5а</a></li>
+    <li><a class="border" href="/schedule/1541588" tabindex="1">5б</a></li>
+    <li><a class="border" href="/schedule/1541589" tabindex="1">5в</a></li>
+    <li><a class="border" href="/schedule/1541590" tabindex="1">5г</a></li>
+    <li><a class="border" href="/schedule/1541591" tabindex="1">5д</a></li>
+    <li><a class="border" href="/schedule/1561863" tabindex="1">5е</a></li>
+    <li><a class="border" href="/schedule/1561859" tabindex="1">5ж</a></li>
+    <li><a class="border" href="/schedule/1541592" tabindex="1">5з</a></li>
+    <li><a class="border" href="/schedule/1541593" tabindex="1">6а</a></li>
+    <li><a class="border" href="/schedule/1541594" tabindex="1">6б</a></li>
+    <li><a class="border" href="/schedule/1541595" tabindex="1">6в</a></li>
+    <li><a class="border" href="/schedule/1541596" tabindex="1">6г</a></li>
+    <li><a class="border" href="/schedule/1541597" tabindex="1">6д</a></li>
+    <li><a class="border" href="/schedule/1541598" tabindex="1">6е</a></li>
+    <li><a class="border" href="/schedule/1541599" tabindex="1">6ж</a></li>
+    <li><a class="border" href="/schedule/1541600" tabindex="1">7а</a></li>
+    <li><a class="border" href="/schedule/1541601" tabindex="1">7б</a></li>
+    <li><a class="border" href="/schedule/1541602" tabindex="1">7в</a></li>
+    <li><a class="border" href="/schedule/1541603" tabindex="1">7г</a></li>
+    <li><a class="border" href="/schedule/1541604" tabindex="1">7д</a></li>
+    <li><a class="border" href="/schedule/1541605" tabindex="1">7е</a></li>
+    <li><a class="border" href="/schedule/1541606" tabindex="1">7ж</a></li>
+    <li><a class="border" href="/schedule/1587743" tabindex="1">7к</a></li>
+    <li><a class="border" href="/schedule/1541607" tabindex="1">8а</a></li>
+    <li><a class="border" href="/schedule/1541608" tabindex="1">8б</a></li>
+    <li><a class="border" href="/schedule/1541609" tabindex="1">8в</a></li>
+    <li><a class="border" href="/schedule/1541610" tabindex="1">8г</a></li>
+    <li><a class="border" href="/schedule/1541611" tabindex="1">8д</a></li>
+    <li><a class="border" href="/schedule/1541612" tabindex="1">8е</a></li>
+    <li><a class="border" href="/schedule/1541613" tabindex="1">9а</a></li>
+    <li><a class="border" href="/schedule/1541614" tabindex="1">9б</a></li>
+    <li><a class="border" href="/schedule/1541615" tabindex="1">9в</a></li>
+    <li><a class="border" href="/schedule/1541617" tabindex="1">9д</a></li>
+    <li><a class="border" href="/schedule/1541618" tabindex="1">9е</a></li>
+    <li><a class="border" href="/schedule/1541619" tabindex="1">9ж</a></li>
+  </ul>
 </div>
-
+{% else %}
+  {{ schedule_class | safe }}
+{% endif %}
 {% endblock %}
