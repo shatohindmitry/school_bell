@@ -251,24 +251,28 @@ def getBellDays(bell_days_all, bell_days_spec, bell_days_weekend):
         schedules_day_all = schedules_day_all + f"""
         <div class ="form-check">
         <input class ="form-check-input" type="checkbox" value="{i}" name="checkbox" id="{weekday_en[i]}all" onclick = "validate(this.id)" {checked[bell_days_all[i][1]]}>
-        <label class ="form-check-label" for ="{weekday_en[i]}all"> {weekday_ru[i]} </label ></div>"""
+        <label class ="form-check-label" for ="{weekday_en[i]}all"> {weekday_ru[i]} </label >
+        </div>"""
     schedules_day_all = schedules_day_all + schedules_day_text_end
 
     for i in range(7):
         schedules_day_spec = schedules_day_spec + f"""
         <div class ="form-check">
         <input class ="form-check-input" type="checkbox" value="{i+10}" name="checkbox" id="{weekday_en[i]}spe" onclick = "validate(this.id)" {checked[bell_days_spec[i][1]]}>
-        <label class ="form-check-label" for ="{weekday_en[i]}spe"> {weekday_ru[i]} </label ></div>"""
+        <label class ="form-check-label" for ="{weekday_en[i]}spe"> {weekday_ru[i]} </label >
+        </div>"""
     schedules_day_spec = schedules_day_spec + schedules_day_text_end
 
     for i in range(7):
         schedules_day_week = schedules_day_week + f"""
         <div class ="form-check">
         <input class ="form-check-input" type="checkbox" value="{i+20}" name="checkbox" id="{weekday_en[i]}wkn" onclick = "validate(this.id)" {checked[bell_days_weekend[i][1]]}>
-        <label class ="form-check-label" for ="{weekday_en[i]}wkn"> {weekday_ru[i]} </label ></div>"""
+        <label class ="form-check-label" for ="{weekday_en[i]}wkn"> {weekday_ru[i]} </label >
+        </div>"""
     schedules_day_week = schedules_day_week + schedules_day_text_end
 
     schedules_day_all = schedules_day_text_start + schedules_day_all + schedules_day_spec + schedules_day_week + schedules_day_text_end
+
     return schedules_day_all
 
 def getBellTimes(all_time, spec_time):
@@ -346,7 +350,7 @@ def getBellTimes(all_time, spec_time):
                 </td>
             </tr>"""
 
-    schedules_time = schedules_time_all_text_start + schedules_time_all + schedules_time_all_text_table + schedules_time_all_button + schedules_time_all_text_end + schedules_time_separator + schedules_time_spec + schedules_time_all_text_table + schedules_time_spec_button + schedules_time_all_text_end
+    schedules_time = schedules_time_all_text_start + schedules_time_all + schedules_time_all_text_table + schedules_time_all_button + schedules_time_all_text_end + schedules_time_separator + schedules_time_spec + schedules_time_all_text_table + schedules_time_spec_button + schedules_time_all_text_end + schedules_time_all_text_end
 
     return schedules_time
 
@@ -374,6 +378,15 @@ def config_bells():
         return redirect("/login")
     return redirect("/edit_table")
 
+def get_ini_files():
+    current_directory = os.getcwd()
+    ini_files = []
+    for root, dirs, files in os.walk(current_directory):
+        for file in files:
+            if file.endswith('.ini'):
+                ini_files.append(file)
+    return ini_files
+
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if not session.get("name"):
@@ -385,16 +398,21 @@ def upload_file():
         else:
             save_file(request)
             return redirect(url_for('config_bells'))
-    return render_template('upload.html')
+    ini_files = get_ini_files()
+    return render_template('upload.html', ini_files=ini_files)
 
-@app.route('/download')
-def download():
+@app.route('/download/<file_name>')
+def download(file_name):
     if not session.get("name"):
         return redirect("/login")
-    path = os.path.abspath(FILENAME)
+    if not 'config' in file_name or not'.ini' in file_name:
+        flash('Ошибка получения файла')
+        return redirect("/edit_table")
+    path = os.path.abspath(file_name)
     try:
         return send_file(path, as_attachment=True)
     except FileNotFoundError:
+        flash('Ошибка получения файла')
         return redirect("/edit_table")
 
 @app.route("/logout")
