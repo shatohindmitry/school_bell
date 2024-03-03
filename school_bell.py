@@ -450,7 +450,8 @@ def edit_table():
                                username=session.get("name"),
                                bell_time=bell_time,
                                bell_days=bell_days,
-                               holidays=holidays)
+                               holidays=holidays,
+                               version=version)
 
 @app.errorhandler(404)
 def not_found(e):
