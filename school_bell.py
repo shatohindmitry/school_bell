@@ -4,6 +4,7 @@ import shutil
 from flask import Flask, request, render_template, redirect, url_for, flash, session, send_file
 from werkzeug.utils import secure_filename
 from operator import itemgetter
+from version import get_version
 
 USERNAMES = {'admin': '321', 'user': '123'}
 FILENAME = 'config.ini'
@@ -426,11 +427,11 @@ def edit_table():
     if not session.get("name"):
         return redirect("/login")
     if session.get('name') == 'admin':
-        modal = False
+        version = get_version()
     if request.method == 'POST':
         request_json = request.get_json(force=True)
         put_conf_parser(request_json)
-        return render_template('/edit_table.html', modal=modal, username=session.get("name"))
+        return render_template('/edit_table.html', modal=modal, username=session.get("name"), version=version)
     else:
         tasks = get_conf_parser()
 
